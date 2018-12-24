@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 接口设计模式的namespace需设置为接口的包路径 -->
+<mapper namespace="my.dao.LibraryDao">
+    <select id="getAll" resultType="my.bean.Library">
+        select * from library
+    </select>
+
+    <select id="getById" resultType="my.bean.Library">
+        select * from library where id = #{id}
+    </select>
+
+</mapper>

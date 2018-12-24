@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 注意属性顺序 -->
+
+    <!-- 导入配置文件 -->
+    <properties resource="dbconfig.properties"/>
+    <settings>
+        <!-- 默认值最好也写出来, 防止之版本更新 -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"/>
+    </settings>
+    
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!-- 配置 Student.xml -->
+    <mappers>
+        <mapper resource="mappers/User.xml"/>
+        <mapper resource="mappers/Option.xml"/>
+        <mapper resource="mappers/Word.xml"/>
+        <mapper resource="mappers/Library.xml"/>
+        <mapper resource="mappers/Review.xml"/>
+        <mapper resource="mappers/Unskilled.xml"/>
+    </mappers>
+</configuration>

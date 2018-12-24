@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 接口设计模式的namespace需设置为接口的包路径 -->
+<mapper namespace="my.dao.ReviewDao">
+
+    <!-- 新建复习 -->
+    <insert id="addReview">
+        insert into review (user_id, created_at) values (#{user_id}, #{created_at});
+    </insert>
+
+
+    <resultMap id="reviewWord" type="my.bean.Word">
+        <id column="id" property="id"/>
+        <result column="content" property="content"/>
+        <result column="translation" property="translation"/>
+        <result column="library_id" property="library_id"/>
+        <result column="skill_level" property="skill_level"/>
+    </resultMap>
+    <!-- 获得所有复习单词 -->
+    <select id="getReviewWord" resultMap="reviewWord">
+        select
+          word.*, r2w.skill_level skill_level
+        from
+          review re, review_and_word r2w, word
+        where
+          re.id = r2w.review_id
+        and
+          r2w.word_id = word.id
+        and
+          re.user_id = #{userId}
+        limit
+          #{offset},#{end}
+    </select>
+
+    <!-- 获得所有复习单词2 -->
+    <select id="getReviewWord2" resultMap="reviewWord">
+        select
+          word.*, r2w.skill_level skill_level
+        from
+          review re, review_and_word r2w, word
+        where
+          re.id = r2w.review_id
+        and
+          r2w.word_id = word.id
+        and
+          re.user_id = #{userId}
+        limit
+          #{start},#{end}
+    </select>
+
+    <!-- 查询用户复习表 -->
+    <select id="getReviewById" resultType="my.bean.Review">
+        select * from review where user_id = #{userId}
+    </select>
+
+    <!-- 批量增加复习单词 -->
+    <insert id="addReviewWord">
+        insert into
+          `review_and_word` (review_id, word_id, skill_level)
+        values
+          <foreach collection="words" separator="," item="temp">
+              (
+                #{review_id},
+                #{temp.id},
+                #{temp.skill_level}
+              )
+          </foreach>
+    </insert>
+
+    <!-- 批量更新复习单词 -->
+    <update id="updateReviewWord">
+        update
+          `review_and_word`
+        set
+          skill_level =
+            <foreach collection="words" item="item" separator=" "  open="case word_id" close="end">
+                 when #{item.id} then #{item.skill_level}
+            </foreach>
+        where
+          review_id = #{review_id} and word_id in
+          <foreach collection="words" item="item" separator="," open="(" close=")">
+              #{item.id}
+          </foreach>
+    </update>
+</mapper>

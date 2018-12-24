@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 接口设计模式的namespace需设置为接口的包路径 -->
+<mapper namespace="my.dao.OptionDao">
+
+    <!-- 新增设置 -->
+    <insert id="addOption">
+        insert into `option` (user_id, library_id, error_interval, rand_interval) values (#{user_id}, #{library_id}, #{error_interval}, #{rand_interval});
+    </insert>
+
+    <!-- 获得用户系统设置 -->
+    <select id="getOptionById" resultType="my.bean.Option">
+        select * from `option` where user_id = #{id}
+    </select>
+
+    <!-- 选择词库 -->
+    <update id="setLibrary">
+        update `option` set library_id = #{libraryId} where user_id = #{userId}
+    </update>
+
+    <!-- 设置错误间隔与随机测试次数 -->
+    <update id="setErrorandRand">
+        update `option` set error_interval = #{errorInterval}, rand_interval = #{randInterval} where user_id = #{userId}
+    </update>
+
+    <!-- 设置当前单词 -->
+    <update id="setCurrentWord">
+        update `option` set current_word = #{id} where user_id = #{userId}
+    </update>
+
+    <!-- 设置当前Cn复习进度 -->
+    <update id="setCurrentReviewCn">
+        update `option` set current_review = #{count} where user_id = #{userId}
+    </update>
+
+    <!-- 设置当前En复习进度 -->
+    <update id="setCurrentReviewEn">
+        update `option` set current_review2 = #{count} where user_id = #{userId}
+    </update>
+
+    <!-- 设置当前测试进度 -->
+    <update id="setCurrentTest">
+        update `option` set current_test = #{count} where user_id = #{userId}
+    </update>
+</mapper>

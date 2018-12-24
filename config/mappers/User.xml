@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 接口设计模式的namespace需设置为接口的包路径 -->
+<mapper namespace="my.dao.UserDao">
+
+    <select id="getAll" resultType="my.bean.User" >
+        select * from user
+    </select>
+
+    <!-- 按名字查找用户 -->
+    <select id="getUserByName" resultType="my.bean.User">
+        select * from `user` where username = #{name}
+    </select>
+
+    <!-- 添加用户 -->
+    <insert id="addUser" keyProperty="id" useGeneratedKeys="true">
+        insert into `user` (username, password, created_at, updated_at) values (#{username}, #{password}, #{created_at}, #{updated_at})
+    </insert>
+
+    <!-- 更新用户密码 -->
+    <update id="updatePassword">
+        update user set password = #{password} where id = #{id}
+    </update>
+
+    <!-- 更新用户更新时间 -->
+    <update id="setUpdatedAt">
+        update user set updated_at = #{updated_at} where id = #{id}
+    </update>
+
+    <!-- 收藏词库 -->
+    <insert id="selectLibrary">
+        insert into library_and_user (user_id, library_id, created_at)
+        values (#{user_id}, #{library_id}, #{created_at})
+    </insert>
+    
+    <!-- 查看是否收藏 -->
+    <select id="selectLibrartById" resultType="my.bean.LibraryAndUser">
+        select * from `library_and_user` where user_id = #{user_id} and library_id = #{library_id}
+    </select>
+
+    <!-- 获得用户所有收藏 -->
+    <select id="getSelectLibrary" resultType="my.bean.LibraryAndUser">
+        select * from `library_and_user` where user_id = #{userId}
+    </select>
+
+    <!-- 删除所选收藏 -->
+    <delete id="deleteSelectLibraryById">
+        delete from `library_and_user` where user_id = #{user_id} and library_id = #{library_id}
+    </delete>
+</mapper>

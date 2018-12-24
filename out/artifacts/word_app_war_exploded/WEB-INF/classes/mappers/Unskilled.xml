@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 接口设计模式的namespace需设置为接口的包路径 -->
+<mapper namespace="my.dao.UnskilledDao">
+    <!-- 新建生词表 -->
+    <insert id="addUnskill">
+        insert into unskilled (user_id, created_at) values (#{user_id}, #{created_at});
+    </insert>
+
+    <select id="getUnskillById" resultType="my.bean.Unskilled">
+        select * from unskilled where user_id = #{userId}
+    </select>
+
+    <!-- 添加生词 -->
+    <insert id="addUnskillWord">
+        insert into `unskilled_and_word` (unskilled_id, word_id) values (#{unskilled_id}, #{word_id})
+    </insert>
+
+    <!-- 获得所有生单词 -->
+    <select id="getUnskilledWord" resultType="my.bean.Word">
+        select
+          word.*
+        from
+          unskilled us, unskilled_and_word u2w, word
+        where
+          us.id = u2w.unskilled_id
+        and
+          u2w.word_id = word.id
+        and
+          us.user_id = #{userId}
+    </select>
+
+    <!-- 删除所选单词 -->
+    <delete id="deleteUnskilledWord">
+        delete from `unskilled_and_word` where unskilled_id = #{unskilled_id} and word_id in
+        <foreach collection="words" item="item" separator="," open="(" close=")">
+            #{item.id}
+        </foreach>
+    </delete>
+
+    <!-- 批量增加生单词 -->
+    <insert id="addUnskillWords">
+        insert into
+        `unskilled_and_word` (unskilled_id, word_id)
+        values
+        <foreach collection="unskills" separator="," item="temp">
+            (
+            #{unskilled_id},
+            #{temp.id}
+            )
+        </foreach>
+    </insert>
+</mapper>

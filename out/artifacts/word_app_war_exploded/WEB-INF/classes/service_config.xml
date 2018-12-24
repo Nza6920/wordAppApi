@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+    <!-- 用户登陆与注册 -->
+    <service name="Login" class="my.api.session.Login"/>
+    <service name="Register" class="my.api.session.Register"/>
+
+    <!-- 背单词 -->
+    <service name="GetWord" class="my.api.reciteWords.GetWord"/>
+    <service name="GetOption" class="my.api.options.GetOption"/>
+    <service name="GetLibrary" class="my.api.reciteWords.GetLibrary"/>
+    <service name="SelectLibrary" class="my.api.reciteWords.SelectLibrary"/>
+    <service name="GetSelectLibrary" class="my.api.reciteWords.GetSelectLibrary"/>
+    <service name="DeleteSelectLibrary" class="my.api.reciteWords.DeleteSelectLibrary"/>
+    <service name="GetLibraryById" class="my.api.reciteWords.GetLibraryById"/>
+
+    <!-- 复习 -->
+    <service name="GetReviewWords" class="my.api.review.GetReviewWords"/>
+    <service name="AddReviewWords" class="my.api.review.AddReviewWords"/>
+    <service name="UpdateReviewWord" class="my.api.review.UpdateReviewWord"/>
+    <service name="GetReviewWords2" class="my.api.review.GetReviewWords2"/>
+
+    <!-- 系统设置 -->
+    <service name="SetPassword" class="my.api.options.SetPassword"/>
+    <service name="SetCurrentLibrary" class="my.api.options.SetCurrentLibrary"/>
+    <service name="SetRandandError" class="my.api.options.SetRandandError"/>
+    <service name="SetCurrentWord" class="my.api.options.SetCurrentWord"/>
+    <service name="SetCurrentReviewCn" class="my.api.options.SetCurrentReviewCn"/>
+    <service name="SetCurrentReviewEn" class="my.api.options.SetCurrentReviewEn"/>
+    <service name="SetCurrentTest" class="my.api.options.SetCurrentTest"/>
+
+
+    <!-- 生词 -->
+    <service name="AddUnSkillWord" class="my.api.unskilled.AddUnSkillWord"/>
+    <service name="GetUnskilledWords" class="my.api.unskilled.GetUnskilledWords"/>
+    <service name="DeleteUnskilledWord" class="my.api.unskilled.DeleteUnskilledWord"/>
+    <service name="AddUnskillWords" class="my.api.unskilled.AddUnskillWords"/>
+</config>
